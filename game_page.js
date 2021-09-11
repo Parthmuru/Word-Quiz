@@ -1,0 +1,89 @@
+player1_name = localStorage.getItem("player1_name");
+player2_name = localStorage.getItem("player2_name");
+
+player1_score = 0;
+player2_score = 0;
+
+document.getElementById("player1_name").innerHTML = player1_name + " : ";
+document.getElementById("player2_name").innerHTML = player2_name + " : ";
+document.getElementById("player1_score").innerHTML = player1_score;
+document.getElementById("player2_score").innerHTML = player2_score;
+
+document.getElementById("player_question").innerHTML = "Question Turn : " + player1_name;
+document.getElementById("player_answer").innerHTML = "Answer Turn : " + player2_name;
+
+function send(){
+    get_word = document.getElementById("word").value;
+    word = get_word.toLowerCase();
+    console.log("The word in lower case is " + word);
+    char1 = word.charAt(1);
+    console.log(char1);
+
+    var num = Math.floor(word.length / 2);
+    console.log(num)
+
+    char2 = word.charAt(num);
+    console.log(char2);
+
+    num2 = word.length - 1;
+    console.log(num2);
+
+    char3 = word.charAt(num2);
+    console.log(char3);
+
+    replace_one = word.replace(char1, "_");
+    console.log(replace_one);
+
+    replace_two = replace_one.replace(char2, "_");
+    console.log(replace_two);
+
+    replace_three = replace_two.replace(char3, "_");
+    console.log(replace_three);
+
+    question_word = "<h4 id='word_display'> Q." + replace_three+"<h4>";
+    input_box = "<br> Answer: <input type='text' id='input_check_box'>";
+    check_button = "<br><br> <button class='btn btn-info' onclick='check()'>Check</button>";
+    row = question_word + input_box + check_button;
+    document.getElementById("output").innerHTML = row;
+    document.getElementById("word").value = "";
+}
+
+answer_turn = "player2";
+question_turn = "player1";
+
+function check(){
+    get_answer = document.getElementById("input_check_box").value;
+    answer = get_answer.toLowerCase();
+    if(answer == word){
+        if(answer_turn == "player1"){
+            player1_score += 1;
+            document.getElementById("player1_score").innerHTML = player1_score;
+        }
+
+        else{
+            player2_score += 1;
+            document.getElementById("player2_score").innerHTML = player2_score;
+        }
+
+    }
+    if(question_turn == "player1"){
+        question_turn = "player2";
+        document.getElementById("player_question").innerHTML = "Question Turn : " + player2_name;
+    }
+
+    else{
+        question_turn = "player1";
+        document.getElementById("player_question").innerHTML = "Question Turn : " + player1_name;
+    }
+
+    if(answer_turn == "player2"){
+        answer_turn = "player1";
+        document.getElementById("player_answer").innerHTML = "Answer Turn : " + player1_name;
+    }
+
+    else{
+        answer_turn = "player2";
+        document.getElementById("player_answer").innerHTML = "Answer Turn : " + player2_name;
+    }
+    document.getElementById("output").innerHTML = "";
+}
